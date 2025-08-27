@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhagavad Gita Daily - Sequential Journey</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕉️</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕉️</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #fef7ed, #fefce8, #fef2f2);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #fed7aa;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: linear-gradient(135deg, #f97316, #dc2626);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .logo-text p {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .header-stats {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .streak-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #fed7aa;
+            padding: 0.5rem 0.75rem;
+            border-radius: 9999px;
+            color: #c2410c;
+            font-weight: 600;
+        }
+
+        .day-badge {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        /* Navigation Tabs */
+        .tabs {
+            margin: 2rem 0;
+        }
+
+        .tab-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            background: white;
+            border-radius: 0.5rem;
+            padding: 0.25rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .tab-button.active {
+            background: #f97316;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid #fed7aa;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-description {
+            color: #6b7280;
+            font-size: 1.125rem;
+        }
+
+        /* Verse Sections */
+        .verse-section {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+        }
+
+        .sanskrit {
+            background: linear-gradient(90deg, #fed7aa, #fef3c7);
+        }
+
+        .transliteration {
+            background: linear-gradient(90deg, #dbeafe, #e0e7ff);
+        }
+
+        .translation {
+            background: linear-gradient(90deg, #dcfce7, #d1fae5);
+        }
+
+        .meaning {
+            background: linear-gradient(90deg, #fae8ff, #f3e8ff);
+        }
+
+        .krishna-teaching {
+            background: linear-gradient(90deg, #fff7ed, #fef3c7);
+            border-left: 4px solid #f97316;
+        }
+
+        .verse-section h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.75rem;
+            text-align: center;
+        }
+
+        .sanskrit-text {
+            font-size: 1.5rem;
+            font-family: serif;
+            color: #1f2937;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        .transliteration-text {
+            font-size: 1.25rem;
+            font-style: italic;
+            color: #374151;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        .translation-text {
+            font-size: 1.25rem;
+            color: #1f2937;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        .meaning-text {
+            color: #374151;
+            line-height: 1.8;
+        }
+
+        .krishna-teaching-text {
+            color: #92400e;
+            line-height: 1.8;
+            font-weight: 500;
+        }
+
+        /* Date info */
+        .date-info {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 0.875rem;
+            color: #0369a1;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            background: white;
+            border: 1px solid #d1d5db;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .btn:hover {
+            background: #f9fafb;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: #f97316;
+            color: white;
+            border-color: #f97316;
+        }
+
+        .btn-primary:hover {
+            background: #ea580c;
+        }
+
+        /* Progress Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        .stat-label {
+            color: #6b7280;
+        }
+
+        .orange { color: #ea580c; }
+        .blue { color: #2563eb; }
+        .green { color: #16a34a; }
+
+        /* Reading History */
+        .history-list {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            background: white;
+        }
+
+        .history-item {
+            padding: 1rem;
+            border-bottom: 1px solid #f3f4f6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-verse {
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        .history-date {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        /* Calendar Styles */
+        .calendar-container {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .calendar-nav button {
+            background: #f3f4f6;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .calendar-nav button:hover {
+            background: #e5e7eb;
+        }
+
+        .calendar-month-year {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .calendar-weekday {
+            text-align: center;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #6b7280;
+            padding: 0.5rem;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .calendar-day:hover {
+            background: #f3f4f6;
+        }
+
+        .calendar-day.other-month {
+            color: #d1d5db;
+        }
+
+        .calendar-day.today {
+            background: #fef3c7;
+            color: #92400e;
+            font-weight: 600;
+        }
+
+        .calendar-day.read {
+            background: #dcfce7;
+            color: #16a34a;
+            font-weight: 600;
+        }
+
+        .calendar-day.read::after {
+            content: '✓';
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            font-size: 0.625rem;
+            color: #16a34a;
+        }
+
+        .calendar-day.multiple-reads {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .calendar-day.multiple-reads::after {
+            content: attr(data-count);
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            font-size: 0.625rem;
+            background: #2563eb;
+            color: white;
+            border-radius: 50%;
+            width: 12px;
+            height: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Verse Grid */
+        .verse-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .verse-day {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .verse-day.completed {
+            background: #22c55e;
+            color: white;
+        }
+
+        .verse-day.current {
+            background: #f97316;
+            color: white;
+        }
+
+        .verse-day.upcoming {
+            background: #e5e7eb;
+            color: #6b7280;
+        }
+
+        .verse-day:hover {
+            transform: scale(1.1);
+            transition: transform 0.2s;
+        }
+
+        .legend {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-dot {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid #fed7aa;
+            margin-top: 3rem;
+            padding: 1.5rem 0;
+            text-align: center;
+        }
+
+        .footer-quote {
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-text {
+            font-size: 0.875rem;
+            color: #9ca3af;
+        }
+
+        /* Stars */
+        .stars {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .star {
+            color: #eab308;
+            font-size: 1.25rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .tab-list {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .calendar-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">📖</div>
+                    <div class="logo-text">
+                        <h1>Bhagavad Gita Daily</h1>
+                        <p>Sequential journey through sacred wisdom</p>
+                    </div>
+                </div>
+                <div class="header-stats">
+                    <div class="streak-badge">
+                        <span>🔥</span>
+                        <span id="streak-display">0 day streak</span>
+                    </div>
+                    <div class="day-badge">
+                        📅 Verse <span id="verse-display">1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Navigation Tabs -->
+        <div class="tabs">
+            <div class="tab-list">
+                <button class="tab-button active" onclick="showTab('today')">Current Verse</button>
+                <button class="tab-button" onclick="showTab('explore')">Explore</button>
+                <button class="tab-button" onclick="showTab('progress')">Progress</button>
+                <button class="tab-button" onclick="showTab('calendar')">Calendar</button>
+            </div>
+
+            <!-- Today's Verse Tab -->
+            <div id="today" class="tab-content active">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="stars">
+                            <span class="star">⭐</span>
+                            <h2 class="card-title">Your Next Verse</h2>
+                            <span class="star">⭐</span>
+                        </div>
+                        <p class="card-description" id="today-verse-info">Chapter 1, Verse 1</p>
+                    </div>
+                    <div id="today-date-info" class="date-info"></div>
+                    <div id="today-verse-content">
+                        <!-- Content will be populated by JavaScript -->
+                    </div>
+                    <div style="text-align: center; margin-top: 1.5rem;">
+                        <button class="btn btn-primary" onclick="markCurrentVerseAsRead()" id="mark-read-btn">
+                            ✓ Mark as Read & Continue
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Explore Tab -->
+            <div id="explore" class="tab-content">
+                <div class="nav-buttons">
+                    <h2 class="nav-title">Explore Verses</h2>
+                    <div class="button-group">
+                        <button class="btn" onclick="goToPreviousVerse()" id="prev-btn">
+                            ← Previous
+                        </button>
+                        <button class="btn" onclick="goToNextVerse()">
+                            Next →
+                        </button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title" id="explore-verse-title">Chapter 1, Verse 1</h2>
+                    </div>
+                    <div id="explore-date-info" class="date-info"></div>
+                    <div id="explore-verse-content">
+                        <!-- Content will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Tab -->
+            <div id="progress" class="tab-content">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>🔥 Current Streak</h3>
+                        <div class="stat-value orange" id="progress-streak">0</div>
+                        <p class="stat-label">consecutive days</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>📖 Verses Read</h3>
+                        <div class="stat-value blue" id="progress-verses">0</div>
+                        <p class="stat-label">total verses</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>📅 Current Verse</h3>
+                        <div class="stat-value green" id="progress-current">1</div>
+                        <p class="stat-label">in sequence</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Reading History</h2>
+                        <p class="card-description">Your journey through the Bhagavad Gita with dates</p>
+                    </div>
+                    <div class="history-list" id="history-list">
+                        <!-- History will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Verse Progress</h2>
+                        <p class="card-description">Visual representation of your reading progress</p>
+                    </div>
+                    <div class="verse-grid" id="verse-grid">
+                        <!-- Verse grid will be populated by JavaScript -->
+                    </div>
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: #22c55e;"></div>
+                            <span>Read</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: #f97316;"></div>
+                            <span>Current</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: #e5e7eb;"></div>
+                            <span>Upcoming</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendar Tab -->
+            <div id="calendar" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">📅 Reading Calendar</h2>
+                        <p class="card-description">Track your daily reading progress by date</p>
+                    </div>
+                    
+                    <div class="calendar-container">
+                        <div class="calendar-header">
+                            <div class="calendar-nav">
+                                <button onclick="previousMonth()">‹</button>
+                                <button onclick="nextMonth()">›</button>
+                            </div>
+                            <div class="calendar-month-year" id="calendar-month-year">
+                                <!-- Month and year will be populated by JavaScript -->
+                            </div>
+                            <button class="btn" onclick="goToToday()">Today</button>
+                        </div>
+
+                        <div class="calendar-weekdays">
+                            <div class="calendar-weekday">Sun</div>
+                            <div class="calendar-weekday">Mon</div>
+                            <div class="calendar-weekday">Tue</div>
+                            <div class="calendar-weekday">Wed</div>
+                            <div class="calendar-weekday">Thu</div>
+                            <div class="calendar-weekday">Fri</div>
+                            <div class="calendar-weekday">Sat</div>
+                        </div>
+
+                        <div class="calendar-days" id="calendar-days">
+                            <!-- Calendar days will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 1.5rem;">
+                        <div class="legend">
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: #fef3c7;"></div>
+                                <span>Today</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: #dcfce7;"></div>
+                                <span>Read verses</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: #dbeafe;"></div>
+                                <span>Multiple verses</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-quote">
+                "You have the right to work, but never to the fruit of work." - Bhagavad Gita 2.47
+            </p>
+            <p class="footer-text">
+                Continue your sequential journey through the wisdom of the Bhagavad Gita
+            </p>
+        </div>
+    </footer>
+
+    <!-- Pronunciation Guide Modal -->
+    <div id="pronunciation-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; padding: 2rem;">
+        <div style="background: white; max-width: 800px; margin: 0 auto; border-radius: 1rem; padding: 2rem; max-height: 90vh; overflow-y: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h2 style="font-size: 1.5rem; font-weight: bold; color: #1f2937;">Sanskrit Pronunciation Guide</h2>
+                <button onclick="closePronunciationGuide()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #6b7280;">×</button>
+            </div>
+            
+            <div style="margin-bottom: 1.5rem;">
+                <p style="color: #6b7280; margin-bottom: 1rem;">Learn how to pronounce Sanskrit words using the English transliteration with special marks (diacriticals):</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                <!-- Vowels Section -->
+                <div style="background: #fef7ed; padding: 1.5rem; border-radius: 0.5rem;">
+                    <h3 style="font-size: 1.25rem; font-weight: 600; color: #ea580c; margin-bottom: 1rem;">Vowels</h3>
+                    <div style="space-y: 0.5rem;">
+                        <div style="margin-bottom: 0.5rem;"><strong>a</strong> - as in "but" (short)</div>
+                        <div style="margin-bottom: 0.5rem;"><strong>ā</strong> - as in "father" (long)</div>
+                        <div style="margin-bottom: 0.5rem;"><strong>i</strong> - as in "bit" (short)</div>
+                        <div style="margin-bottom: 0.5rem;"><strong>ī</strong> - as in "beet" (long)</div>
+                        <div style="margin-bottom: 0.5rem;"><strong>u</strong> - as in "put" (short)</div>
+                        <div style="margin-bottom: 0.5rem;"><strong>ū</strong> - as in "boot" (long)</div>
+                        <div style="margin-bottom: 0.5rem;"><strong>e</strong> - as in "hey"</div>
+                        <div style="margin-bottom: 0.5rem;"><strong>o</strong> - as in "go"</div>
+                        <div style="margin-bottom: 0.5rem;"><strong>ṛi</strong> - as in "grit"</div>
+                    </div>
+                </div>
+
+                <!-- Consonants Section -->
+                <div style="background: #f0f9ff; padding: 1.5rem; border-radius: 0.5rem;">
+                    <h3 style="font-size: 1.25rem; font-weight: 600; color: #2563eb; margin-bottom: 1rem;">Special Consonants</h3>
+                    <div>
+                        <div style="margin-bottom: 0.5rem;"><strong>ṅ</strong> - as "ng" in "sing"</div>
+                        <div style="margin-bottom: 0.5rem;"><strong>ñ</strong> - as "ny" in "canyon"</div>
+                        <div style="margin-bottom: 0.5rem;"><strong>ṭ</strong> - retroflex "t" (tongue curled back)</div>
+                        <div style="margin-bottom: 0.5rem;"><strong>ḍ</strong> - retroflex "d" (tongue curled back)</div>
+                        <div style="margin-bottom: 0.5rem;"><strong>ṇ</strong> - retroflex "n" (tongue curled back)</div>
+                        <div style="margin-bottom: 0.5rem;"><strong>ś</strong> - as "sh" in "shine"</div>
+                        <div style="margin-bottom: 0.5rem;"><strong>ṣ</strong> - retroflex "sh" (deeper sound)</div>
+                        <div style="margin-bottom: 0.5rem;"><strong>ṁ</strong> - nasal sound (like "m" or "n")</div>
+                        <div style="margin-bottom: 0.5rem;"><strong>ḥ</strong> - aspirated "h" (breathy sound)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Examples Section -->
+            <div style="background: #f0fdf4; padding: 1.5rem; border-radius: 0.5rem; margin-top: 1.5rem;">
+                <h3 style="font-size: 1.25rem; font-weight: 600; color: #16a34a; margin-bottom: 1rem;">Common Examples</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                    <div>
+                        <div style="font-weight: 600; margin-bottom: 0.25rem;">dharma</div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">DHAR-ma (duty/righteousness)</div>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600; margin-bottom: 0.25rem;">kṣhetra</div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">KSHEH-tra (field)</div>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600; margin-bottom: 0.25rem;">saṅgaḥ</div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">SANG-gah (attachment)</div>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600; margin-bottom: 0.25rem;">śhāśhvataḥ</div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">SHASH-va-tah (eternal)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips Section -->
+            <div style="background: #faf5ff; padding: 1.5rem; border-radius: 0.5rem; margin-top: 1.5rem;">
+                <h3 style="font-size: 1.25rem; font-weight: 600; color: #7c3aed; margin-bottom: 1rem;">Pronunciation Tips</h3>
+                <ul style="list-style-type: disc; padding-left: 1.5rem; space-y: 0.5rem;">
+                    <li style="margin-bottom: 0.5rem;">Long vowels (ā, ī, ū) are held twice as long as short vowels</li>
+                    <li style="margin-bottom: 0.5rem;">Retroflex consonants (ṭ, ḍ, ṇ, ṣ) are pronounced with the tongue curled back</li>
+                    <li style="margin-bottom: 0.5rem;">The dot under letters indicates retroflex pronunciation</li>
+                    <li style="margin-bottom: 0.5rem;">The line over vowels (ā, ī, ū) indicates they are long</li>
+                    <li style="margin-bottom: 0.5rem;">Practice slowly at first, focusing on each sound</li>
+                    <li style="margin-bottom: 0.5rem;">Sanskrit is phonetic - each letter has only one sound</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sequential Bhagavad Gita verses starting from Chapter 1, Verse 1
+        const gitaVerses = [
+            {
+                id: 1,
+                chapter: 1,
+                verse: 1,
+                sanskrit: "धृतराष्ट्र उवाच। धर्मक्षेत्रे कुरुक्षेत्रे समवेता युयुत्सवः। मामकाः पाण्डवाश्चैव किमकुर्वत सञ्जय॥",
+                transliteration: "dhṛitarāśhtra uvācha | dharma-kṣhetre kuru-kṣhetre samavetā yuyutsavaḥ | māmakāḥ pāṇḍavāśh chaiva kim akurvata sañjaya ||",
+                english: "Dhritarashtra said: O Sanjaya, after gathering on the holy field of Kurukshetra, and desiring to fight, what did my sons and the sons of Pandu do?",
+                meaning: "This is the opening verse of the Bhagavad Gita. King Dhritarashtra asks his minister Sanjaya about the events on the battlefield of Kurukshetra. The word 'dharma-kshetra' (field of dharma) is significant as it sets the spiritual context for the entire dialogue that follows.",
+                krishnaTeaching: "Though this verse is spoken by Dhritarashtra, it establishes the divine setting where Krishna will reveal eternal truths. The 'dharma-kshetra' (field of righteousness) symbolizes that this battle is not just physical, but a spiritual struggle between good and evil. Krishna teaches us that life itself is a battlefield where we must choose between dharma (righteousness) and adharma (unrighteousness). Every moment, we face this choice - will we act according to divine principles or be driven by selfish desires?"
+            },
+            {
+                id: 2,
+                chapter: 1,
+                verse: 2,
+                sanskrit: "सञ्जय उवाच। दृष्ट्वा तु पाण्डवानीकं व्यूढं दुर्योधनस्तदा। आचार्यमुपसङ्गम्य राजा वचनमब्रवीत्॥",
+                transliteration: "sañjaya uvācha | dṛiṣhṭvā tu pāṇḍavānīkaṁ vyūḍhaṁ duryodhanas tadā | āchāryam upasaṅgamya rājā vachanam abravīt ||",
+                english: "Sanjaya said: On observing the Pandava army arranged in military formation, King Duryodhana approached his teacher Dronacharya and spoke the following words.",
+                meaning: "Sanjaya begins his narration by describing how Duryodhana, upon seeing the well-arranged Pandava army, approaches his teacher Drona. This shows Duryodhana's concern about the strength of his opponents and his need for reassurance from his mentor.",
+                krishnaTeaching: "Here we see the beginning of fear and doubt. Duryodhana represents the ego-driven mind that seeks validation and support when faced with truth and righteousness. Krishna teaches us that when we are on the wrong path, we constantly need external reassurance. In contrast, those who follow dharma find strength from within, from their connection to the Divine. This verse reminds us to examine our motivations - are we seeking approval for righteous actions or trying to justify wrong ones?"
+            },
+            {
+                id: 3,
+                chapter: 1,
+                verse: 3,
+                sanskrit: "पश्यैतां पाण्डुपुत्राणामाचार्य महतीं चमूम्। व्यूढां द्रुपदपुत्रेण तव शिष्येण धीमता॥",
+                transliteration: "paśhyaitāṁ pāṇḍu-putrāṇām āchārya mahatīṁ chamūm | vyūḍhāṁ drupada-putreṇa tava śhiṣhyeṇa dhīmatā ||",
+                english: "Behold, O teacher, this mighty army of the sons of Pandu, arrayed by your intelligent disciple, the son of Drupada.",
+                meaning: "Duryodhana points out to Drona that the Pandava army has been skillfully arranged by Dhrishtadyumna (son of Drupada), who was actually Drona's own student. This creates an ironic situation where the teacher faces his own disciple in battle.",
+                krishnaTeaching: "This verse reveals a profound truth about karma and relationships. Drona now faces his own student in battle - a consequence of his choices and loyalties. Krishna teaches us that our actions create complex webs of relationships and consequences. When we compromise our dharma for material gain (as Drona did by serving the Kauravas despite knowing their adharma), we may find ourselves in painful situations where our past students, friends, or loved ones stand against us. The lesson is to always choose righteousness over convenience, truth over temporary advantage."
+            },
+            {
+                id: 4,
+                chapter: 1,
+                verse: 4,
+                sanskrit: "अत्र शूरा महेष्वासा भीमार्जुनसमा युधि। युयुधानो विराटश्च द्रुपदश्च महारथः॥",
+                transliteration: "atra śhūrā maheṣhvāsā bhīmārjuna-samā yudhi | yuyudhāno virāṭaśh cha drupadaśh cha mahārathaḥ ||",
+                english: "Here in this army are many heroic bowmen equal in fighting to Bhima and Arjuna: great fighters like Yuyudhana, Virata, and Drupada.",
+                meaning: "Duryodhana continues to enumerate the great warriors in the Pandava army, comparing them to the mighty Bhima and Arjuna. He mentions Yuyudhana (Satyaki), King Virata, and King Drupada as maharathas (great chariot warriors).",
+                krishnaTeaching: "Through Duryodhana's words, Krishna shows us how fear magnifies opposition. When we are on the wrong path, even righteous people appear as formidable enemies. But this also reveals a deeper truth - when we align with dharma, we naturally attract powerful allies and supporters. The Pandavas, though fewer in number, had quality warriors who fought for justice. Krishna teaches us that it's better to have a few sincere supporters of truth than many who follow us for selfish reasons. Quality of character matters more than quantity of supporters."
+            },
+            {
+                id: 5,
+                chapter: 1,
+                verse: 5,
+                sanskrit: "धृष्टकेतुश्चेकितानः काशिराजश्च वीर्यवान्। पुरुजित्कुन्तिभोजश्च शैब्यश्च नरपुङ्गवः॥",
+                transliteration: "dhṛiṣhṭaketuśh chekitānaḥ kāśhirājaśh cha vīryavān | purujit kuntibhojaśh cha śhaibyaśh cha nara-puṅgavaḥ ||",
+                english: "There are also great, heroic, powerful fighters like Dhrishtaketu, Chekitana, Kashiraja, Purujit, Kuntibhoja, and Shaibya.",
+                meaning: "The enumeration of warriors continues with more names of powerful kings and fighters allied with the Pandavas. Each of these warriors was renowned for their valor and military prowess, making the Pandava army formidable.",
+                krishnaTeaching: "This verse demonstrates how righteousness (dharma) naturally attracts noble souls. These great kings chose to support the Pandavas not for personal gain, but because they recognized justice and truth. Krishna teaches us that when we stand for what is right, the universe conspires to help us. Good people are drawn to good causes. However, we must also understand that the path of dharma is not always easy - it requires courage to stand against injustice, even when the odds seem overwhelming. These warriors teach us the value of moral courage and standing up for truth."
+            },
+            {
+                id: 6,
+                chapter: 1,
+                verse: 6,
+                sanskrit: "युधामन्युश्च विक्रान्त उत्तमौजाश्च वीर्यवान्। सौभद्रो द्रौपदेयाश्च सर्व एव महारथाः॥",
+                transliteration: "yudhāmanyuśh cha vikrānta uttamaujāśh cha vīryavān | saubhadro draupadeyāśh cha sarva eva mahārathāḥ ||",
+                english: "There are the mighty Yudhamanyu, the very powerful Uttamauja, the son of Subhadra (Abhimanyu), and the sons of Draupadi. All these warriors are great chariot fighters.",
+                meaning: "Duryodhana concludes his list by mentioning Yudhamanyu, Uttamauja, Abhimanyu (Arjuna's son), and the five sons of Draupadi. All are described as maharathas, indicating their exceptional skill in warfare.",
+                krishnaTeaching: "Here we see the next generation - Abhimanyu and the sons of Draupadi - ready to fight for dharma. Krishna teaches us that righteousness is not just for one generation; it must be passed down through families and societies. When parents live by dharmic principles, their children naturally inherit these values and become warriors for truth. This verse reminds us of our responsibility to the next generation - are we teaching them to fight for what is right? Are we modeling courage, integrity, and devotion to truth? The young warriors mentioned here show us that age is no barrier to standing up for righteousness."
+            },
+            {
+                id: 7,
+                chapter: 1,
+                verse: 7,
+                sanskrit: "अस्माकं तु विशिष्टा ये तान्निबोध द्विजोत्तम। नायका मम सैन्यस्य संज्ञार्थं तान्ब्रवीमि ते॥",
+                transliteration: "asmākaṁ tu viśhiṣhṭā ye tān nibodha dvijottama | nāyakā mama sainyasya saṁjñārthaṁ tān bravīmi te ||",
+                english: "But for your information, O best of the twice-born, let me tell you about the captains of my army who are especially qualified to lead.",
+                meaning: "After describing the Pandava army, Duryodhana now turns to enumerate his own army's leaders. He addresses Drona as 'dvijottama' (best of the twice-born), showing respect while also trying to boost morale by highlighting his own army's strength.",
+                krishnaTeaching: "Duryodhana's shift to praising his own army reveals the ego's tendency to seek reassurance and validation. Krishna teaches us that when we are insecure about our position or actions, we often resort to boasting and trying to convince others (and ourselves) of our strength. True confidence comes from being aligned with dharma, not from external power or numbers. Notice how Duryodhana addresses Drona with respect ('dvijottama') while manipulating him - this shows how the ego can use even respectful language for selfish purposes. Krishna reminds us to examine our motivations when we praise or seek approval."
+            },
+            {
+                id: 8,
+                chapter: 1,
+                verse: 8,
+                sanskrit: "भवान्भीष्मश्च कर्णश्च कृपश्च समितिञ्जयः। अश्वत्थामा विकर्णश्च सौमदत्तिस्तथैव च॥",
+                transliteration: "bhavān bhīṣhmaśh cha karṇaśh cha kṛipaśh cha samitiñjayaḥ | aśhvatthāmā vikarṇaśh cha saumadattis tathaiva cha ||",
+                english: "There are personalities like you, Bhishma, Karna, Kripa, Ashwatthama, Vikarna, and Bhurishrava, who are always victorious in battle.",
+                meaning: "Duryodhana lists his greatest warriors: Drona himself, the grandsire Bhishma, the mighty Karna, the teacher Kripa, Drona's son Ashwatthama, Duryodhana's brother Vikarna, and Bhurishrava (son of Somadatta). All are described as ever-victorious in battle.",
+                krishnaTeaching: "This verse reveals a tragic truth - great souls can sometimes find themselves on the wrong side due to obligations, loyalties, or circumstances. Bhishma, Drona, and Kripa were noble souls bound by duty and gratitude to the Kuru dynasty. Krishna teaches us that even good people can become instruments of adharma when they prioritize personal loyalty over universal dharma. This is a warning to always examine whether our loyalties and obligations align with higher truth and justice. Sometimes, the most difficult dharmic choice is to break away from those we love and respect when they are on the wrong path."
+            },
+            {
+                id: 9,
+                chapter: 1,
+                verse: 9,
+                sanskrit: "अन्ये च बहवः शूरा मदर्थे त्यक्तजीविताः। नानाशस्त्रप्रहरणाः सर्वे युद्धविशारदाः॥",
+                transliteration: "anye cha bahavaḥ śhūrā mad-arthe tyakta-jīvitāḥ | nānā-śhastra-praharaṇāḥ sarve yuddha-viśhāradāḥ ||",
+                english: "There are many other heroes who are prepared to lay down their lives for my sake. They are all skilled in the art of warfare and equipped with various kinds of weapons.",
+                meaning: "Duryodhana mentions that besides these named warriors, there are many other heroes ready to sacrifice their lives for him. They are all expert fighters skilled with various weapons, emphasizing the strength and loyalty of his army.",
+                krishnaTeaching: "Here we see the dangerous power of charismatic but misguided leadership. Duryodhana has inspired loyalty in many brave warriors who are willing to die for him, yet his cause is unjust. Krishna teaches us to be very careful about whom we follow and for what cause we are willing to sacrifice. Courage and loyalty are noble qualities, but when directed toward wrong purposes, they become destructive. This verse reminds us to always question: 'Is the cause I'm fighting for truly righteous? Am I being loyal to a person or to principles?' True heroism lies in fighting for dharma, not just for personal loyalty to individuals."
+            },
+            {
+                id: 10,
+                chapter: 1,
+                verse: 10,
+                sanskrit: "अपर्याप्तं तदस्माकं बलं भीष्माभिरक्षितम्। पर्याप्तं त्विदमेतेषां बलं भीमाभिरक्षितम्॥",
+                transliteration: "aparyāptaṁ tad asmākaṁ balaṁ bhīṣhmābhirakṣhitam | paryāptaṁ tv idam eteṣhāṁ balaṁ bhīmābhirakṣhitam ||",
+                english: "Our strength is immeasurable, and we are perfectly protected by Grandsire Bhishma, whereas the Pandavas' strength, carefully protected by Bhima, is limited.",
+                meaning: "Duryodhana expresses confidence in his army's superiority. He believes his forces, protected by the invincible Bhishma, are unlimited in strength, while the Pandava army, though protected by the mighty Bhima, is comparatively limited. This shows his overconfidence and miscalculation.",
+                krishnaTeaching: "This verse perfectly illustrates the blindness of ego and adharma. Duryodhana's overconfidence reveals how those on the wrong path often misjudge situations and underestimate the power of righteousness. Krishna teaches us that when we are driven by ego, we lose the ability to see clearly. We overestimate our own strength and underestimate our opponents. But there's a deeper truth here - Duryodhana doesn't realize that the Pandavas have the greatest protector of all: Krishna himself. When we align with dharma, we receive divine protection that no material force can overcome. This verse warns us against arrogance and reminds us that true strength comes from righteousness, not from numbers or weapons."
+            }
+        ];
+
+        // Application state
+        let currentVerseIndex = 0;
+        let streak = 0;
+        let readVerses = new Map();
+        let exploreIndex = 0;
+        let currentCalendarDate = new Date();
+
+        // Initialize the application
+        function init() {
+            loadData();
+            updateDisplay();
+            calculateStreak();
+            updateCalendar();
+        }
+
+        // Load data from localStorage
+        function loadData() {
+            const savedReadVerses = localStorage.getItem('gita-sequential-read');
+            const savedCurrentIndex = localStorage.getItem('gita-sequential-current');
+            const savedExploreIndex = localStorage.getItem('gita-sequential-explore');
+
+            if (savedReadVerses) readVerses = new Map(JSON.parse(savedReadVerses));
+            if (savedCurrentIndex) currentVerseIndex = parseInt(savedCurrentIndex);
+            if (savedExploreIndex) exploreIndex = parseInt(savedExploreIndex);
+        }
+
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('gita-sequential-read', JSON.stringify([...readVerses]));
+            localStorage.setItem('gita-sequential-current', currentVerseIndex.toString());
+            localStorage.setItem('gita-sequential-explore', exploreIndex.toString());
+        }
+
+        // Calculate accurate streak based on consecutive days with readings
+        function calculateStreak() {
+            if (readVerses.size === 0) {
+                streak = 0;
+                return;
+            }
+
+            // Get all unique dates when verses were read
+            const readDates = [...new Set([...readVerses.values()])];
+            
+            // Sort dates in descending order (most recent first)
+            readDates.sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
+
+            // Start from today and count backwards
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            let currentStreakDate = new Date(today);
+            streak = 0;
+
+            // Check if there's a reading today
+            const todayStr = today.toDateString();
+            let hasReadingToday = readDates.includes(todayStr);
+
+            // If no reading today, start from yesterday
+            if (!hasReadingToday) {
+                currentStreakDate.setDate(currentStreakDate.getDate() - 1);
+            }
+
+            // Count consecutive days backwards
+            while (true) {
+                const dateStr = currentStreakDate.toDateString();
+                if (readDates.includes(dateStr)) {
+                    streak++;
+                    currentStreakDate.setDate(currentStreakDate.getDate() - 1);
+                } else {
+                    break;
+                }
+            }
+        }
+
+        // Get verse by index
+        function getVerseByIndex(index) {
+            if (index >= 0 && index < gitaVerses.length) {
+                return gitaVerses[index];
+            }
+            return null;
+        }
+
+        // Create verse HTML with Krishna's teaching
+        function createVerseHTML(verse) {
+            return `
+                <div class="verse-section sanskrit">
+                    <h3>Sanskrit</h3>
+                    <p class="sanskrit-text">${verse.sanskrit}</p>
+                </div>
+                <div class="verse-section transliteration">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                        <h3 style="margin: 0;">Pronunciation</h3>
+                        <button onclick="showPronunciationGuide()" style="background: #3b82f6; color: white; border: none; padding: 0.25rem 0.75rem; border-radius: 0.375rem; font-size: 0.75rem; cursor: pointer;">
+                            📖 Guide
+                        </button>
+                    </div>
+                    <p class="transliteration-text">${verse.transliteration}</p>
+                </div>
+                <div class="verse-section translation">
+                    <h3>Translation</h3>
+                    <p class="translation-text">${verse.english}</p>
+                </div>
+                <div class="verse-section meaning">
+                    <h3>Context & Meaning</h3>
+                    <p class="meaning-text">${verse.meaning}</p>
+                </div>
+                <div class="verse-section krishna-teaching">
+                    <h3>🕉️ Krishna's Wisdom & Life Application</h3>
+                    <p class="krishna-teaching-text">${verse.krishnaTeaching}</p>
+                </div>
+            `;
+        }
+
+        // Format date for display
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+        }
+
+        // Update all displays
+        function updateDisplay() {
+            // Update header
+            document.getElementById('streak-display').textContent = `${streak} day streak`;
+            document.getElementById('verse-display').textContent = currentVerseIndex + 1;
+
+            // Update current verse
+            const currentVerse = getVerseByIndex(currentVerseIndex);
+            if (currentVerse) {
+                document.getElementById('today-verse-info').textContent = `Chapter ${currentVerse.chapter}, Verse ${currentVerse.verse}`;
+                document.getElementById('today-verse-content').innerHTML = createVerseHTML(currentVerse);
+                
+                // Show date info if already read
+                const dateInfo = document.getElementById('today-date-info');
+                if (readVerses.has(currentVerseIndex)) {
+                    const readDate = readVerses.get(currentVerseIndex);
+                    dateInfo.textContent = `✓ Read on ${formatDate(readDate)}`;
+                    dateInfo.style.display = 'block';
+                    document.getElementById('mark-read-btn').textContent = '→ Continue to Next Verse';
+                } else {
+                    dateInfo.style.display = 'none';
+                    document.getElementById('mark-read-btn').textContent = '✓ Mark as Read & Continue';
+                }
+            }
+
+            // Update explore verse
+            const exploreVerse = getVerseByIndex(exploreIndex);
+            if (exploreVerse) {
+                document.getElementById('explore-verse-title').textContent = `Chapter ${exploreVerse.chapter}, Verse ${exploreVerse.verse}`;
+                document.getElementById('explore-verse-content').innerHTML = createVerseHTML(exploreVerse);
+                
+                // Show date info if read
+                const exploreDateInfo = document.getElementById('explore-date-info');
+                if (readVerses.has(exploreIndex)) {
+                    const readDate = readVerses.get(exploreIndex);
+                    exploreDateInfo.textContent = `✓ Read on ${formatDate(readDate)}`;
+                    exploreDateInfo.style.display = 'block';
+                } else {
+                    exploreDateInfo.style.display = 'none';
+                }
+            }
+
+            // Update progress stats
+            document.getElementById('progress-streak').textContent = streak;
+            document.getElementById('progress-verses').textContent = readVerses.size;
+            document.getElementById('progress-current').textContent = currentVerseIndex + 1;
+
+            // Update navigation buttons
+            document.getElementById('prev-btn').disabled = exploreIndex <= 0;
+
+            // Update reading history
+            updateHistory();
+            
+            // Update verse grid
+            updateVerseGrid();
+        }
+
+        // Update reading history
+        function updateHistory() {
+            const historyList = document.getElementById('history-list');
+            historyList.innerHTML = '';
+
+            if (readVerses.size === 0) {
+                historyList.innerHTML = '<div style="padding: 2rem; text-align: center; color: #6b7280;">No verses read yet. Start your journey!</div>';
+                return;
+            }
+
+            // Convert to array and sort by date (most recent first)
+            const sortedHistory = [...readVerses.entries()].sort((a, b) => {
+                return new Date(b[1]).getTime() - new Date(a[1]).getTime();
+            });
+
+            sortedHistory.forEach(([index, date]) => {
+                const verse = getVerseByIndex(index);
+                if (verse) {
+                    const historyItem = document.createElement('div');
+                    historyItem.className = 'history-item';
+                    historyItem.innerHTML = `
+                        <div class="history-verse">Chapter ${verse.chapter}, Verse ${verse.verse}</div>
+                        <div class="history-date">${formatDate(date)}</div>
+                    `;
+                    historyList.appendChild(historyItem);
+                }
+            });
+        }
+
+        // Update verse grid
+        function updateVerseGrid() {
+            const verseGrid = document.getElementById('verse-grid');
+            verseGrid.innerHTML = '';
+
+            const maxDisplay = Math.min(28, gitaVerses.length);
+            
+            for (let i = 0; i < maxDisplay; i++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'verse-day';
+                dayElement.textContent = i + 1;
+                dayElement.title = `Chapter ${gitaVerses[i].chapter}, Verse ${gitaVerses[i].verse}`;
+
+                if (readVerses.has(i)) {
+                    dayElement.classList.add('completed');
+                    const readDate = readVerses.get(i);
+                    dayElement.title += ` - Read on ${formatDate(readDate)}`;
+                } else if (i === currentVerseIndex) {
+                    dayElement.classList.add('current');
+                } else {
+                    dayElement.classList.add('upcoming');
+                }
+
+                // Add click handler to jump to verse
+                dayElement.addEventListener('click', () => {
+                    exploreIndex = i;
+                    showTab('explore');
+                    updateDisplay();
+                });
+
+                verseGrid.appendChild(dayElement);
+            }
+        }
+
+        // Calendar functions
+        function updateCalendar() {
+            const monthNames = [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ];
+
+            // Update month/year display
+            document.getElementById('calendar-month-year').textContent = 
+                `${monthNames[currentCalendarDate.getMonth()]} ${currentCalendarDate.getFullYear()}`;
+
+            // Clear existing days
+            const calendarDays = document.getElementById('calendar-days');
+            calendarDays.innerHTML = '';
+
+            // Get first day of month and number of days
+            const firstDay = new Date(currentCalendarDate.getFullYear(), currentCalendarDate.getMonth(), 1);
+            const lastDay = new Date(currentCalendarDate.getFullYear(), currentCalendarDate.getMonth() + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            const startingDayOfWeek = firstDay.getDay();
+
+            // Add empty cells for days before the first day of the month
+            for (let i = 0; i < startingDayOfWeek; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day other-month';
+                const prevMonthDay = new Date(currentCalendarDate.getFullYear(), currentCalendarDate.getMonth(), 0 - (startingDayOfWeek - 1 - i));
+                emptyDay.textContent = prevMonthDay.getDate();
+                calendarDays.appendChild(emptyDay);
+            }
+
+            // Add days of the current month
+            const today = new Date();
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = day;
+
+                const currentDate = new Date(currentCalendarDate.getFullYear(), currentCalendarDate.getMonth(), day);
+                const dateString = currentDate.toDateString();
+
+                // Check if this is today
+                if (currentDate.toDateString() === today.toDateString()) {
+                    dayElement.classList.add('today');
+                }
+
+                // Count verses read on this date
+                let versesReadOnDate = 0;
+                for (let [index, readDate] of readVerses) {
+                    if (readDate === dateString) {
+                        versesReadOnDate++;
+                    }
+                }
+
+                if (versesReadOnDate > 0) {
+                    if (versesReadOnDate === 1) {
+                        dayElement.classList.add('read');
+                    } else {
+                        dayElement.classList.add('multiple-reads');
+                        dayElement.setAttribute('data-count', versesReadOnDate);
+                    }
+
+                    // Add tooltip with verses read
+                    const versesOnDate = [];
+                    for (let [index, readDate] of readVerses) {
+                        if (readDate === dateString) {
+                            const verse = getVerseByIndex(index);
+                            if (verse) {
+                                versesOnDate.push(`Ch${verse.chapter}.${verse.verse}`);
+                            }
+                        }
+                    }
+                    dayElement.title = `${versesReadOnDate} verse${versesReadOnDate > 1 ? 's' : ''} read: ${versesOnDate.join(', ')}`;
+                }
+
+                calendarDays.appendChild(dayElement);
+            }
+
+            // Add remaining days to fill the grid
+            const totalCells = calendarDays.children.length;
+            const remainingCells = 42 - totalCells; // 6 rows × 7 days = 42 cells
+            for (let i = 1; i <= remainingCells; i++) {
+                const nextMonthDay = document.createElement('div');
+                nextMonthDay.className = 'calendar-day other-month';
+                nextMonthDay.textContent = i;
+                calendarDays.appendChild(nextMonthDay);
+            }
+        }
+
+        function previousMonth() {
+            currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
+            updateCalendar();
+        }
+
+        function nextMonth() {
+            currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
+            updateCalendar();
+        }
+
+        function goToToday() {
+            currentCalendarDate = new Date();
+            updateCalendar();
+        }
+
+        // Mark current verse as read
+        function markCurrentVerseAsRead() {
+            const today = new Date().toDateString();
+            
+            if (!readVerses.has(currentVerseIndex)) {
+                readVerses.set(currentVerseIndex, today);
+            }
+            
+            // Move to next verse
+            if (currentVerseIndex < gitaVerses.length - 1) {
+                currentVerseIndex++;
+            }
+            
+            saveData();
+            calculateStreak(); // Recalculate streak after new reading
+            updateDisplay();
+            updateCalendar(); // Update calendar to show new reading
+        }
+
+        // Tab navigation
+        function showTab(tabName) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => button.classList.remove('active'));
+
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+
+            // Update calendar when switching to calendar tab
+            if (tabName === 'calendar') {
+                updateCalendar();
+            }
+        }
+
+        // Navigation functions for explore tab
+        function goToNextVerse() {
+            if (exploreIndex < gitaVerses.length - 1) {
+                exploreIndex++;
+                saveData();
+                updateDisplay();
+            }
+        }
+
+        function goToPreviousVerse() {
+            if (exploreIndex > 0) {
+                exploreIndex--;
+                saveData();
+                updateDisplay();
+            }
+        }
+
+        // Pronunciation guide functions
+        function showPronunciationGuide() {
+            document.getElementById('pronunciation-modal').style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closePronunciationGuide() {
+            document.getElementById('pronunciation-modal').style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('pronunciation-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePronunciationGuide();
+            }
+        });
+
+        // Initialize the application when page loads
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
+
